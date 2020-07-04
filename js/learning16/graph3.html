@@ -1,0 +1,38 @@
+<body style="margin:0">
+<canvas id="chart" width="100" height="100"></canvas>
+円周率: <span id="pi"></span>
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+
+const red = [];
+const blue = [];
+const totalcount = 2000; // ランダムに打つ点の総数
+let incount = 0; // 円に入った点の数
+for (let i = 0; i < totalcount; i++) {
+  const x = Math.random(); // 0-1 の範囲の値
+  const y = Math.random(); // 0-1 の範囲の値
+  if (x ** 2 + y ** 2 < 1.0) { // 単位円の中に入ったら
+    incount++; // 入ったらカウンターに１を加える
+    red.push({ x, y }); // 赤色でプロット準備
+  } else {
+    blue.push({ x, y }); // 青色でプロット準備
+  }
+}
+pi.textContent = incount * 4.0 / totalcount; // 求まった円周率
+
+const config = {
+  type: 'bubble',
+  data: {
+    datasets: [
+      { data: red, backgroundColor: 'rgb(255, 99, 132)' },
+      { data: blue, backgroundColor: 'rgb(132, 99, 255)' }
+    ]
+  },
+  options: {
+    animation: { duration: 0 },
+    title: { display: true, text: "Monte Carlo method" },
+    legend: { display: false }
+  }
+};
+new Chart.Chart(chart, config);
+</script>

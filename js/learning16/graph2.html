@@ -1,0 +1,29 @@
+<body style="margin:0">
+<canvas id="chart"></canvas>
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+
+const deme = [0, 0, 0, 0, 0, 0] // 出目の数を数える配列
+for (let i = 0; i < 100; i++) {
+  const saikoro = Math.floor(Math.random() * 6 + 1);
+  deme[saikoro - 1]++;
+}
+const left = [1, 2, 3, 4, 5, 6] // グラフの左方向の値指定用
+
+const config = {
+  type: 'bar',
+  data: {
+    labels: left,
+    datasets: [{ data: deme, backgroundColor: 'rgb(255, 99, 132)' }]
+  },
+  options: {
+    title: { display: true, text: "SAIKORO SIMULATION" },
+    scales: {
+      xAxes: [{ scaleLabel: { display: true, labelString: "ME" } }],
+      yAxes: [{ scaleLabel: { display: true, labelString: "KAISUU" }, ticks: { beginAtZero: true } }],
+    },
+    legend: { display: false }
+  }
+};
+new Chart.Chart(chart, config);
+</script>

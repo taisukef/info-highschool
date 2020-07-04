@@ -1,0 +1,31 @@
+<body style="margin:0">
+<canvas id="chart"></canvas>
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+
+const riritsu = 0.05;
+const yokin = [100000];
+const labels = [];
+for (let i = 0; i < 10; i++) {
+  const risoku = Math.floor(yokin[i] * riritsu);
+  yokin.push(yokin[i] + risoku);
+  labels[i] = i + 1;
+}
+
+const config = {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [{ data: yokin, borderColor: 'rgb(255, 99, 132)', fill: false, lineTension: 0 }]
+  },
+  options: {
+    title: { display: true, text: "FUKURI KEISAN" },
+    scales: {
+      xAxes: [{ scaleLabel: { display: true, labelString: "Year" } }],
+      yAxes: [{ scaleLabel: { display: true, labelString: "Yokin[YEN]" }, ticks: { beginAtZero: true } }],
+    },
+    legend: { display: false }
+  }
+};
+new Chart.Chart(chart, config);
+</script>
