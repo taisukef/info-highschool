@@ -2,7 +2,7 @@
 
 ## 第3章 コンピュータとプログラミング
 
-JavaScriptでのグラフ描画  
+JavaScriptでのグラフ描画（ブラウザのみ使用、インストール不要）  
 https://github.com/taisukef/info-highschool/tree/master/js/learning16  
 
 
