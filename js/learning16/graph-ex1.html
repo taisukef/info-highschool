@@ -1,0 +1,43 @@
+<body style="margin:0;text-align:center;">
+<canvas id="chart"></canvas>
+データ出典：<a href=https://www.mhlw.go.jp/stf/covid-19/open-data.html>オープンデータ｜厚生労働省</a>（新型コロナウイルス感染症について）<br>
+
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+import util from "https://taisukef.github.io/util/util.mjs";
+
+const main = async () => {
+  // const url = "https://www.stopcovid19.jp/data/mhlw_go_jp/opendata/covid19.csv";
+  const url = "https://www.stopcovid19.jp/data/mhlw_go_jp/opendata/pcr_positive_daily.csv";
+
+  const json = await util.fetchCSVtoJSON(url);
+  console.log(json);
+
+  const date = [];
+  const data1 = [];
+  for (const d of json) {
+    date.push(d["日付"]);
+    data1.push(d["PCR 検査陽性者数"]);
+  }
+
+  const config = {
+    type: "line",
+    data: {
+      labels: date,
+      datasets: [
+        { data: data1, borderColor: 'rgb(255, 99, 132)', fill: false, lineTension: 0 },
+      ]
+    },
+    options: {
+      title: { display: true, text: "COVID-19 日本のPCR検査陽性者数" },
+      scales: {
+        xAxes: [{ scaleLabel: { display: true, labelString: "日付" } }],
+        yAxes: [{ scaleLabel: { display: true, labelString: "PCR 検査陽性者数" }, ticks: { beginAtZero: true } }],
+      },
+      legend: { display: false }
+    }
+  };
+  new Chart.Chart(chart, config);
+};
+main();
+</script>
