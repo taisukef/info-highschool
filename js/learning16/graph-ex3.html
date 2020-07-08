@@ -1,0 +1,48 @@
+<body style="margin:1em 0;text-align:center;">
+<h2>環境省による海洋ごみの実態把握調査 2016年 全国10地点</h2>
+<canvas id="chart" width=100 height=70></canvas>
+<br>
+データ出典：<a href=https://www.env.go.jp/council/03recycle/y0312-03/y031203-s1r.pdf>漂着ごみ（プラスチック類のみ）の種類別割合 - 環境省による海洋ごみの実態把握調査 2016年 全国10地点</a><br>（新型コロナウイルス感染症について） - プラスチックを取り巻く国内外の状況＜第3回資料集＞<br>
+  
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+import util from "https://taisukef.github.io/util/util.mjs";
+
+const main = async () => {
+  const url = "./2016-garbage-ocean-japan.csv";
+
+  const json = await util.fetchCSVtoJSON(url);
+  json.sort((a, b) => b["重量"] - a["重量"]); // 重量が大きい順に並び替え
+  console.log(json);
+
+  const labels = [];
+  const data = [];
+  const backgroundColor = [];
+  for (let i = 0; i < json.length; i++) {
+    const d = json[i];
+    labels.push(d["分類"] + " " + d["重量"] + "%");
+    data.push(d["重量"]);
+    if (d["分類"] == "ポリ袋") {
+      backgroundColor.push(`hsl(0,100%,50%)`);
+    } else {
+      backgroundColor.push(`hsl(${360 / json.length * i},10%,80%)`);
+    }
+  }
+  console.log(labels, data);
+
+  const config = {
+    type: "pie",
+    data: {
+      labels,
+      datasets: [{ data, backgroundColor }]
+    },
+    options: {
+      // title: { display: true, text: "環境省による海洋ごみの実態把握調査 2016年 全国10地点" },
+      //legend: { position: "right" },
+      tooltips: { callbacks: { label: (item, data) => data.labels[item.index] } }
+    }
+  };
+  new Chart.Chart(chart, config);
+};
+main();
+</script>
