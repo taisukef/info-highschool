@@ -33,6 +33,16 @@ https://taisukef.github.io/info-highschool/js/learning16/graph2-dice1.html
 肉サイコロ2（画像表示 x 画像素材オープンデータ x アニメーション）  
 https://taisukef.github.io/info-highschool/js/learning16/graph2-dice2.html  
 
+## 解説記事
+2022年高校「情報I」プログラミング教材JavaScript版へコントリビュート  
+https://fukuno.jig.jp/2900  
+
+厚生労働省CSVオープンデータ開始！CSVをグラフ化する高校プログラミング向け補助教材  
+https://fukuno.jig.jp/2903  
+
+レジ袋はなぜ有料化されたのか？ EBPMとオープンデータ、CSVから円グラフ化する高校プログラミング向け補助教材  
+https://fukuno.jig.jp/2904  
+
 ## link
 高等学校情報科（各学科に共通する教科）：文部科学省  
 https://www.mext.go.jp/a_menu/shotou/zyouhou/detail/1416746.htm  
