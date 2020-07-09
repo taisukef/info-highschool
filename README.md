@@ -43,6 +43,9 @@ https://fukuno.jig.jp/2903
 レジ袋はなぜ有料化されたのか？ EBPMとオープンデータ、CSVから円グラフ化する高校プログラミング向け補助教材  
 https://fukuno.jig.jp/2904  
 
+肉フリー素材でお肉サイコロアプリをつくろう! パソコン離れと高校プログラミング向け教材の難しさ  
+https://fukuno.jig.jp/2905  
+
 ## link
 高等学校情報科（各学科に共通する教科）：文部科学省  
 https://www.mext.go.jp/a_menu/shotou/zyouhou/detail/1416746.htm  
