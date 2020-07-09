@@ -27,10 +27,10 @@ https://taisukef.github.io/info-highschool/js/learning16/graph-ex2.html
 環境省 - 漂流ごみ（グラフ x CSV）  
 https://taisukef.github.io/info-highschool/js/learning16/graph-ex3.html  
 
-肉サイコロ（画像表示 x 画像素材オープンデータ）  
+肉サイコロ（画像表示 x 画像フリー素材）  
 https://taisukef.github.io/info-highschool/js/learning16/graph2-dice1.html  
 
-肉サイコロ2（画像表示 x 画像素材オープンデータ x アニメーション）  
+肉サイコロ2（画像表示 x 画像フリー素材 x アニメーション）  
 https://taisukef.github.io/info-highschool/js/learning16/graph2-dice2.html  
 
 ## 解説記事
