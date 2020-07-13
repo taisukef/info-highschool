@@ -25,8 +25,8 @@ const main = async () => {
     data: {
       labels: date,
       datasets: [
-        { type: "line", data: data1, borderColor: 'rgb(255, 99, 132)', fill: false, lineTension: 0, yAxisID: "yr" },
-        { type: "bar", data: data2, backgroundColor: 'rgb(99, 255, 132)', fill: false, lineTension: 0, yAxisID: "yl" }
+        { type: "line", data: data1, borderColor: 'rgb(255, 99, 132)', fill: false, lineTension: 0, yAxisID: "yl" },
+        { type: "bar", data: data2, backgroundColor: 'rgb(99, 255, 132)', fill: false, lineTension: 0, yAxisID: "yr" }
       ]
     },
     options: {
@@ -34,8 +34,8 @@ const main = async () => {
       scales: {
         xAxes: [{ scaleLabel: { display: true, labelString: "日付" } }],
         yAxes: [
-        { id: "yl", position: "left", scaleLabel: { display: true, labelString: "PCR 検査陽性者数" }, ticks: { beginAtZero: true } },
         { id: "yr", position: "right", scaleLabel: { display: true, labelString: "PCR 検査実施件数" }, ticks: { beginAtZero: true } },
+        { id: "yl", position: "left", scaleLabel: { display: true, labelString: "PCR 検査陽性者数" }, ticks: { beginAtZero: true } },
         ],
       },
       legend: { display: false }
