@@ -1,0 +1,127 @@
+<body style="margin:1em 0;text-align:center;">
+
+<h2>鯖江市世代別人口割合（18才以上） 2020年</h2>
+<canvas id="chart6" width=100 height=40></canvas>
+<h2>鯖江市世代別人口割合 2020年</h2>
+<canvas id="chart5" width=100 height=40></canvas>
+
+<h2>鯖江市年齢別人口 2010年〜2020年</h2>
+<canvas id="chart1" width=100 height=50></canvas>
+<h2>鯖江市年齢別女性率 2010年〜2020年</h2>
+<canvas id="chart2" width=100 height=50></canvas>
+<h2>鯖江市年齢別人口推移 2010年〜2020年</h2>
+<canvas id="chart3" width=100 height=50></canvas>
+<h2>鯖江市年齢別人口推移(18〜30才) 2010年〜2020年</h2>
+<canvas id="chart4" width=100 height=50></canvas>
+<br>
+データ出典：<a href=https://ckan.odp.jig.jp/dataset/jp-fukui-sabae-447-odp>人口統計男女年齢別(福井県鯖江市) - データセット - オープンデータプラットフォーム | データカタログサイト</a><br>
+  
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+import util from "https://taisukef.github.io/util/util.mjs";
+
+const getUniques = (json, name) => {
+  return Array.from(json.reduce((acc, cur) => {
+    acc.add(cur[name]);
+    return acc;
+  }, new Set()).values()).sort();
+};
+
+const main = async () => {
+  const url = "./2020-pop-sabae-447.csv";
+  const json = await util.fetchCSVtoJSON(url);
+  console.log(json);
+
+  const years = getUniques(json, "調査年");
+  console.log(years);
+  const ages = getUniques(json, "最小年齢").filter(n => n.length > 0).map(n => parseInt(n)).sort((a, b) => a - b);
+  console.log(ages);
+
+  const show1 = (chart, func, hue) => {
+    const datasets = [];
+    for (let i = years.length - 1; i >= 0; i--) {
+      const y = years[i];
+      const data = [];
+      for (const min of ages) {
+        const p = json.find(d => d.調査年 == y && d.最小年齢 == min);
+        data.push(p ? func(p) : 0);
+      }
+      // const color = `hsl(${360 / years.length * i},10%,80%)`;
+      const color = `hsl(${hue},50%,${95 - 45 / years.length * i}%)`;
+      datasets.push({ label: y + "年", data, borderColor: color, fill: false, lineTension: 0 });
+    }
+
+    const config = {
+      type: "line",
+      labels: years,
+      data: { labels: ages, datasets },
+    };
+    new Chart.Chart(chart, config);
+  };
+  const show2 = (chart, func, hue, minage, maxage) => {
+    const datasets = [];
+    const max = years.reduce((p, cur) => cur > p ? cur : p, 0); // max
+    for (let i = 0; i < ages.length; i++) {
+      const age = ages[i];
+      if (age > maxage || age < minage) continue;
+      const data = [];
+      for (const y of years) {
+        const p = json.find(d => d.調査年 == y && d.最小年齢 == age - (max - y));
+        data.push(p ? func(p) : 0);
+      }
+      // normalize
+      const base = data[0];
+      data[0] = 1;
+      for (let i = 1; i < data.length; i++) {
+        data[i] /= base;
+      }
+
+      const r = (i - minage) / (maxage - minage);
+      const color = `hsl(${240 * r},50%,${50}%)`;
+      datasets.push({ label: age + "才", data, borderColor: color, fill: false, lineTension: 0 });
+    }
+
+    const config = {
+      type: "line",
+      labels: ages,
+      data: { labels: years, datasets },
+    };
+    new Chart.Chart(chart, config);
+  };
+  const show3 = (chart, func, year, agegrp) => {
+    const data = [];
+    const backgroundColor = [];
+    for (let i = 0; i < agegrp.length; i++) {
+      const [minage, maxage] = agegrp[i].split("-");
+      let sum = 0;
+      for (let i = parseInt(minage); i <= parseInt(maxage); i++) {
+        const p = json.find(d => d.調査年 == year && d.最小年齢 == i);
+        console.log(i, p);
+        sum += p ? parseInt(func(p)) : 0;
+      }
+      console.log(minage, maxage, agegrp[i], sum);
+      data.push(sum);
+
+      const r = i / agegrp.length;
+      const color = `hsl(${240 * r},50%,${50}%)`;
+      backgroundColor.push(color);
+    }
+    console.log(data, backgroundColor);
+
+    const config = {
+      type: "bar", // "pie"
+      options: { legend: { display: false } }, // for "bar"
+      data: { labels: agegrp, datasets: [{ data, backgroundColor }] },
+    };
+    new Chart.Chart(chart, config);
+  };
+
+  show1(chart1, p => p.人口, 130);
+  show1(chart2, p => p.女性人口 / p.人口, 0);
+  show2(chart3, p => p.人口, 50, 10, 90);
+  show2(chart4, p => p.人口, 50, 18, 30);
+  show3(chart5, p => p.人口, 2020, ["0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-120"]);
+  show3(chart6, p => p.人口, 2020, ["18-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80-89", "90-120"]);
+};
+main();
+</script>

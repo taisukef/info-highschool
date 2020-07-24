@@ -27,6 +27,9 @@ https://taisukef.github.io/info-highschool/js/learning16/graph-ex2.html
 環境省 - 漂流ごみ（グラフ x CSV）  
 https://taisukef.github.io/info-highschool/js/learning16/graph-ex3.html  
 
+福井県鯖江市 - 年齢別人口（グラフ x CSV）  
+https://taisukef.github.io/info-highschool/js/learning16/graph-ex4.html  
+
 肉サイコロ（画像表示 x 画像フリー素材）  
 https://taisukef.github.io/info-highschool/js/learning16/graph2-dice1.html  
 
@@ -45,6 +48,10 @@ https://fukuno.jig.jp/2904
 
 肉フリー素材でお肉サイコロアプリをつくろう! パソコン離れと高校プログラミング向け教材の難しさ  
 https://fukuno.jig.jp/2905  
+
+2014年に何があった!? 鯖江市オープンデータの世代別・年齢別人口推移をグラフ化してみよう Chart.js  
+https://fukuno.jig.jp/2920  
+
 
 ## link
 高等学校情報科（各学科に共通する教科）：文部科学省  
