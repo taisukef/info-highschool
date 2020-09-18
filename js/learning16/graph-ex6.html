@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"></head>
+<body style="margin:1em 0;text-align:center;">
+
+<h2>温室効果ガス 削減目標 - 2015年 日本の約束草案より</h2>
+<select id="sel"></select>
+<canvas id="chart" width=100 height=40></canvas>
+<h2>データ</h2>
+<div id="table"></div>
+
+<br>
+データ出典：<a href=https://www.kantei.go.jp/jp/singi/ondanka/kaisai/dai30/yakusoku_souan.pdf>日本の約束草案 - 平成２７年７月１７日 地球温暖化対策推進本部決定</a><br>
+
+  
+<script type="module">
+import Chart from "https://code4sabae.github.io/kafumon/lib/Chart.mjs";
+import util from "https://taisukef.github.io/util/util.mjs";
+
+const makeTableFromJSON = json => {
+  const csv = util.json2csv(json);
+  const c = s => document.createElement(s);
+  const tbl = c("table");
+  tbl.style = "display: inline-block; font-size: 80%; border-collapse: collapse;";
+  for (const row of csv) {
+    const tr = c("tr");
+    tbl.appendChild(tr);
+    for (const d of row) {
+      const td = c("td");
+      tr.appendChild(td);
+      td.textContent = d;
+      td.style = "border: 1px solid black;"
+    }
+  }
+  return tbl;
+};
+
+const main = async () => {
+  const url = "./2015-gasmission.csv";
+  const json = await util.fetchCSVtoJSON(url);
+  console.log(json);
+  
+  const addOption = s => {
+    const opt = document.createElement("option");
+    opt.textContent = s;
+    sel.appendChild(opt);
+  };
+  Object.entries(json[0]).filter(d => d[0].indexOf("年度") >= 0).reverse().forEach(d => addOption(d[0]));
+
+  let ch = null;
+  const show = () => {
+    const labels = json.map(d => d.部門名);
+    const name = sel.value;
+    const data = json.map(d => d[name]);
+    const backgroundColor = [];
+    for (let i = 0; i < json.length; i++) {
+      backgroundColor.push(`hsl(${360 / json.length * i},80%,80%)`);
+    }
+    labels.pop();
+    data.pop();
+    backgroundColor.pop();
+
+    const config = {
+      type: "pie",
+      data: {
+        labels,
+        datasets: [{ data, backgroundColor }]
+      },
+      options: {
+        // title: { display: true, text: "環境省による海洋ごみの実態把握調査 2016年 全国10地点" },
+        //legend: { position: "right" },
+        //tooltips: { callbacks: { label: (item, data) => data.labels[item.index] } }
+      }
+    };
+    if (ch) {
+      ch.destroy();
+    }
+    ch = new Chart.Chart(chart, config);
+  };
+  show();
+  sel.onchange = show;
+
+  table.appendChild(makeTableFromJSON(json));
+};
+main();
+</script>
